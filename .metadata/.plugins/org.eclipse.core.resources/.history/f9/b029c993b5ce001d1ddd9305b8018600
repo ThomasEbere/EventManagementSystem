@@ -1,0 +1,5 @@
+package configfile;
+
+public class Configuration {
+
+}

@@ -1,0 +1,1 @@
+# StudentRegistrationform application that enables student register for events and allows school admins manage the registration. This project is built using Java, spring MVC, Hibernate, Html and Css and JavaScript

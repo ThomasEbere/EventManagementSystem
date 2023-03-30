@@ -1,0 +1,29 @@
+package routers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import app.Student;
+import databank.StudentDao;
+
+@Controller
+public class Routers {
+	
+	StudentDao students;
+	
+	@RequestMapping("/")
+	public String homepage() {
+		return "index";
+	}
+	
+	@RequestMapping(value="/save",method=RequestMethod.POST)
+	public String getData(@ModelAttribute("student") Student student, BindingResult bindingResult)
+	{
+		students.addStudent(student);
+		return "saved";
+	}
+
+}
