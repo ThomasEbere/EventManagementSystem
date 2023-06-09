@@ -1,0 +1,322 @@
+@charset "UTF-8";
+body{
+    background-color:#FF1D58;
+    margin: -25px;
+}
+
+.mybody{
+    margin: 0;
+}
+h1,h2{
+    text-align: center;
+    font-family: cursive;
+    font-weight: 15px;
+}
+
+.mydiv{
+    width: 50%;
+    height: 500px;
+    background-color: #FFF685;
+    margin: 3% auto;
+}
+input{
+    float: right;
+    padding: 10px;
+    margin-right: 5%;
+    padding: 5px 7px;
+    width: 50%;
+    margin-top: 10px;
+}
+
+label{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    padding: 10px 10px;
+    font-weight: bold;
+    margin-top: 10%;
+    position: relative;
+    top:10px;
+}
+
+.newdiv{
+    width:90%;
+    height: 50px;
+    background-color: #00DDFF;
+    margin: 10px;
+}
+
+.innerdiv{
+    height: 350px;
+    width: 80%;
+    position: relative;
+    top: 40px;
+    margin: 0px auto;
+}
+
+.innerdiv .lastdiv
+{
+    width: 30%;
+    margin: 20px auto;
+}
+
+.lastdiv input{
+    margin-top: 2%;
+    margin-left: 30px;
+    float: none;
+    padding : 10px 10px;
+    width: 70%;
+}
+
+.admin{
+    background-color: #9DF9EF;
+}
+
+.mydiv .myadmin{
+    top: 60px;
+}
+
+.topdiv
+{
+    height: 400px;
+}
+
+.sign
+{
+    position: absolute;
+    top: 75%;
+    left: 70%;
+}
+header{
+    width: 100%;
+    background-color: #0049B7;
+    height: 50px;
+    position: relative;
+    top: -22px;
+}
+.mydiv .login
+{
+    top: 15px;
+}
+
+.mydiv .logged{
+    top: 42%;
+    left: 72%;
+}
+.login input{
+    margin-right: 6%;
+}
+
+.login .newdiv{
+    width: 70%;
+    margin: 10px auto;
+}
+
+.login .lastdiv{
+    width: 30%;
+    margin-top: 5%;
+}
+
+.login .lastdiv input{
+margin-left: 28px;
+margin-top: 3%;
+}
+
+.thelogin{
+    height:350px;
+}
+li{
+    float: left;
+}
+
+nav{
+    width: 100;
+    background-color: #f2d53c;
+    height: 50px;
+    padding: 10px 10px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.otherlist{
+    float: right;
+    padding: 0 10px;
+}
+
+.signlogged{
+	position:absolute;
+	top:75%;
+	left:70%;
+}
+
+
+.request{
+    background-color: aqua;
+    margin: 0;
+}
+
+.submit-event-tag{
+    text-align: center;
+    font-family:cursive;
+    font-size: 40px;
+}
+
+.submit-event{
+    background-color: bisque;
+    width: 80%;
+    height: auto;
+    margin: 10px auto;
+
+}
+
+.event{
+    width:70%;
+    height: 60px;
+    background-color: brown;
+    margin: 15px auto;
+}
+
+.event input[type=text]{
+width: 50%;
+position: relative;
+top:20%;
+left:2%;
+padding:5px;
+}
+
+.description input[type=text]{
+    width: 20%;
+    left: 2%;
+}
+
+.address-city, .postalcode, .province{
+    display: inline;
+}
+
+.postalcode{
+    position: absolute;
+    left: 62%;
+    margin-top: 10px;
+}
+
+.address-city{
+    position: absolute;
+    margin-top: 10px;
+    left: 47%;
+}
+
+.description .address-city input{
+    width:50%;
+}
+
+.description .postalcode input{
+    width:40%;
+}
+
+.province{
+    position: absolute;
+    margin-top: 10px;
+}
+.start-date, .end-date{
+    display: inline-block;
+    position: relative;
+    top: 20px;
+    margin-left:50px;
+}
+
+.phonenumber input[type=text]{
+    width:35%;
+}
+
+.phonenumber,.email{
+    display: inline-block;
+    margin-left:100px;
+    position: relative;
+    top: 15px;
+}
+
+.eventName label{
+    margin-left:2%;
+    position: relative;
+    top: 10px;
+}
+
+.province{
+    position: relative;
+    margin-left:20px;
+    top: 15px;
+}
+
+.eventDescription label
+{
+    position: relative;
+    top: 15px;
+    left: 20px;
+}
+.eventDescription input{
+    margin-left:20px;
+}
+.submit{
+    margin-left:45%;
+}
+
+.eventlocation {
+    position: absolute;
+    left: 62%;
+}
+
+.eventlocation select{
+    position: relative;
+    left: 150px;
+    display: inline-block;
+}
+
+.eventlocation label{
+    position: absolute;
+    left: 40px;
+    top: -10px;
+}
+
+.client{
+    width:100%;
+    height: 50px;
+    background-color: yellow;
+    padding: 0%;
+    margin: 0%;
+    text-decoration: none;
+
+}
+
+.client .element-div{
+    float:right;
+    margin-right:10px;
+    margin-top: 10px;
+}
+
+.client .element-div li{
+    display: inline;
+    padding: 5px 5px;
+
+}
+
+.client a {
+    text-decoration: none;
+}
+
+.client li{
+    list-style: none;
+}
+
+.my-home li{
+  display:inline ;
+  margin-left:20px;
+  padding-top: 10px;
+
+}
+
+.thiselement{
+    font-family: cursive;
+    text-align: center;
+    font-size:40px;
+}

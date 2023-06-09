@@ -1,0 +1,24 @@
+Upnext
+Ensure that the confirm email link is clickable
+Ensure that when the link is clicked, it routes to proper page
+Update column once user email has been verified
+Implement method to check if a user exist
+Develop landing page for users where they can submit a request to a book a venue
+Landing page should also have nav bar
+
+for wednesday
+
+Add @pathvariable to validate endpoint
+Test that you can get all path variables
+Update user status
+
+For Monday
+Once logged in, create ability to submit a request
+
+Wednesday
+Get submitted details using js 
+move to eclipse
+Create request entity
+persist request data to Db
+Create request table
+Persist request to request table
