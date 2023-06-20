@@ -11,7 +11,7 @@
     <nav class="client">
         <a href="http://" class="my-home"><li>Home</li></a>
         <div class="element-div">
-            <a href="homepage/submitrequest"><li>Submit Requests</li></a>
+            <a href="submitrequest"><li>Submit Requests</li></a>
             <a href="http://"><li>View Submitted Request</li></a>
             <a href="http://"><li>Logout</li></a>
         </div>

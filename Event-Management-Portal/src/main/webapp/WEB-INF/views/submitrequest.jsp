@@ -11,11 +11,11 @@
 <h2 class="submit-event-tag">
         kindly submit the details of your event
     </h2>
-    <form action="">
+    <form action="request" method="post">
     <div class="submit-event">
         <div class="event eventName">
             <label for="EventName">Enter Name of Event</label>
-            <input type="text" name="eventname">
+            <input type="text" name="eventName">
         </div>
         <div class="event description">
             <div class="province">
@@ -43,7 +43,7 @@
         </div>
             <div class="postalcode">
                 <label for="postalcode">Postal code</label>
-                <input type="text" name="postalcode" class="postal">
+                <input type="text" name="postalCode" class="postal">
             </div>
         </div>
         <div class="event eventDescription">
@@ -63,7 +63,7 @@
         <div class="event ">
             <div class="phonenumber">
                 <label for="EventName">Phone Number</label>
-            <input type="text" name="phonenumber">
+            <input type="text" name="phoneNumber">
             </div>
             <div class="email">
                 <label for="EventName">Email</label>
@@ -73,11 +73,11 @@
         <div class="event">
             <div class="start-date">
                 <label for="EventName">Start Date and Time</label>
-            <input type="datetime-local" name="eventstartdate">
+            <input type="datetime-local" name="eventStartDate">
             </div>
             <div class="end-date">
                 <label for="EventName">End Date and Time</label>
-                <input type="datetime-local" name="eventenddate"> 
+                <input type="datetime-local" name="eventEndDate"> 
             </div>
         </div>
             <input type="submit" value="submit" class="submit">

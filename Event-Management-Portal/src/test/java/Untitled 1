@@ -15,10 +15,9 @@ Update user status
 For Monday
 Once logged in, create ability to submit a request
 
-Wednesday
-Get submitted details using js 
-move to eclipse
-Create request entity
-persist request data to Db
-Create request table
-Persist request to request table
+get details of request new page
+Approve/reject
+Modify request database to have status field
+send email to client once the request is approved. 
+
+https://medium.com/javarevisited/lets-add-a-checkout-feature-in-spring-boot-for-our-ecommerce-app-72b12a7f3648

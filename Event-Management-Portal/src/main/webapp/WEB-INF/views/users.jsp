@@ -13,16 +13,16 @@
     </header>
 <div class="mydiv topdiv thelogin">
     <h2>Please supply details to login</h2>
-    <form action="saveuser" method="post">
+    <form action="userlogin" method="post">
         <div class="innerdiv myadmin login ">
-    
+    <p>${message }</p>
         <div class="newdiv">
             <label for="email">Email</label>
             <input type="text"  name="email">
         </div>
         <div class="newdiv">
             <label for="phonenumber">Password</label>
-            <input type="password"  name="phonenumber">
+            <input type="password"  name="password">
       </div>
         <div class="newdiv lastdiv">
         <input type="submit"  name="" value="submit" class="loginsub">

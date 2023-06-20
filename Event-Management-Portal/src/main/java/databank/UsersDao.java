@@ -38,6 +38,11 @@ public class UsersDao {
 		return hibernateTemplate.get(Users.class, pid);
 	}
 	
+	public List<Users> getUserByEmail(String email) {
+		String queryString="FROM Users u where u.email=?0";
+		return  (List<Users>) hibernateTemplate.find(queryString, email);
+	}
+	
 	public void updateUser(Users user)
 	{
 		hibernateTemplate.update(user);

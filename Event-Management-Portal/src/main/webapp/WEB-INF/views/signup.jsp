@@ -13,15 +13,15 @@
     </header>
 <h1>Prime University Admin Portal</h1>
 <div class="mydiv topdiv">
-    <form action="">
+    <form action="adminergistration" method="POST">
         <div class="innerdiv myadmin">
         <div class="newdiv firstdiv">
             <label for="firstname">firstname</label>
-            <input type="text"  name="">
+            <input type="text"  name="firstName">
         </div>
         <div class="newdiv">
             <label for="firstname">lastname</label>
-            <input type="text"  name="lastname">
+            <input type="text"  name="lastName">
         </div>
         <div class="newdiv">
             <label for="email">Email</label>
@@ -29,7 +29,7 @@
         </div>
         <div class="newdiv">
             <label for="phonenumber">Password</label>
-            <input type="password"  name="phonenumber">
+            <input type="password"  name="password">
       </div>
         <div class="newdiv lastdiv">
         <input type="submit"  name="" value="submit">
