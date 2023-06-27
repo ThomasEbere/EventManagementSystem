@@ -1,1 +1,1 @@
-# StudentRegistrationform application that enables student register for events and allows school admins manage the registration. This project is built using Java, spring MVC, Hibernate, Html and Css and JavaScript
+This is an online event management system that allows memebers of the public book event spaces for their use.Once members of the public submit their request to book a hall, it gets sents to the admins who then generate a bill for the clients to make payments for. This application is built using Java, spring MVC, html, css, hibernate core, dialet- Mysql. 

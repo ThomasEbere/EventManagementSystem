@@ -12,10 +12,11 @@
         <a href="http://" class="my-home"><li>Home</li></a>
         <div class="element-div">
             <a href="submitrequest"><li>Submit Requests</li></a>
-            <a href="http://"><li>View Submitted Request</li></a>
-            <a href="http://"><li>Logout</li></a>
+            <a href="viewSubmittedRequests"><li>View Submitted Request</li></a>
+            <a href="logout"><li>Logout</li></a>
         </div>
     </nav>
     <h2 class="thiselement">Event Management System</h2>
+    <h3>Welcome to your homepage ${firstname }</h3>
 </body>
 </html>

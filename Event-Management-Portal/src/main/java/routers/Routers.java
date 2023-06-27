@@ -1,12 +1,15 @@
 package routers;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -84,8 +87,7 @@ public class Routers {
 		for(Users newUser:myUser) {
 			if(user.getEmail().equals(newUser.getEmail()) && user.getPassword().equals(newUser.getPassword())) {
 				
-				return "redirect:/userhomepage";
-					
+				return "redirect:/userhomepage";	
 			}
 		}
 		String message="Please re-enter email and password";
@@ -114,17 +116,12 @@ public class Routers {
 	
 	@RequestMapping("/signup")
 	public String adminRegistration() {
-		
 		return "signup";
 	}
 	
 	@RequestMapping(value="/adminergistration",method=RequestMethod.POST)
 		public String admin(Users user, BindingResult bindingResult, Model model) {
-		
 		users.addUser(user);
-		
-		
-		
 		return "users";
 	}
 	
@@ -132,18 +129,12 @@ public class Routers {
 	public String request(Model model) {
 		List<Request> request= requests.getallRequest();
 		
-//		for(Request myrequest:request) {
-//			
-//			System.out.println(myrequest.getEventName());
-//		}
-//		Request request = (Request) requests.getallRequest();
-//		System.out.print(request.getEventName());
 		model.addAttribute("myrequest", request);
 		return "success";
 	}
 	
 	@RequestMapping(value="/login")
-	public String testUpdate(@ModelAttribute("student") Student student, BindingResult bindingResult) {
+	public String testUpdate(@ModelAttribute("student") Student student, BindingResult bindingResult, HttpServletRequest request) {
 		
 		String userEmail=student.getEmail();
 		if(userEmail!=null)
@@ -151,6 +142,9 @@ public class Routers {
 			List<Student> newStudent=students.getStudentByEmail(userEmail);
 			for(Student myStudent:newStudent) {
 				if(userEmail.equals(myStudent.getEmail()) && student.getpassword().equals(myStudent.getpassword()) && myStudent.isStatus()==true) {
+					
+					HttpSession session= request.getSession();
+					session.setAttribute("email",student.getEmail());
 					
 					return "redirect:homepage";
 				}
@@ -166,9 +160,22 @@ public class Routers {
 	}
 	
 	@RequestMapping("/homepage")
-	public String homepage() {
+	public String homepage(HttpSession session, Model model) {
 		
-		return "landingpage";
+		if(session.getAttribute("email")!=null) {
+			
+			String email=(String) session.getAttribute("email");
+			List<Student> newStudent=students.getStudentByEmail(email);
+			
+			for(Student student:newStudent) {
+				
+				model.addAttribute("firstname", student.getFirstName());
+				return "landingpage";
+			}
+			
+		}
+
+		return "redirect:/login";
 	}
 	
 	
@@ -180,9 +187,29 @@ public class Routers {
 	@RequestMapping("/request")
 	public String submitRequest(@ModelAttribute("request") Request request, BindingResult bindingResult)
 	{
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.US);
+		
+		String startDate=request.getEventStartDate();
+		
+		String endDate=request.getEventEndDate();
+		
+		
+		LocalDateTime localDate = LocalDateTime.parse(startDate, formatter);
+		
+		LocalDateTime newlocalDate = LocalDateTime.parse(endDate, formatter);
+
+
+		
+		String newStartDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDate));
+		
+		String newEndDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(newlocalDate));
+
+		
+		request.setEventStartDate(newStartDate);
+		request.setEventEndDate(newEndDate);
 		request.setStatus("New");
 		requests.addRequest(request);
-		return "landingpage";
+		return "redirect:/homepage";
 	}
 	
 	@RequestMapping(value="/request/{id}")
@@ -203,9 +230,33 @@ public class Routers {
 		requests.updateEventStatus(request, id);
 		
 		return "payment";
-		
 	}
 	
+	@RequestMapping(value="/viewSubmittedRequests")
+	public String viewSubmittedRequest(@ModelAttribute("student") Student student, HttpSession session, Model model) {
+		
+			if(session.getAttribute("email")!=null) {
+			String email=(String) session.getAttribute("email");
+			List<Request> request= requests.getMyRequest(email);
+			for(Request myrequest:request) {
+				System.out.println(myrequest.getEventName());
+			}
+			model.addAttribute("requests", request);
+			return "requestinfo";
+		}
+		return "redirect:/login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		
+		if(session !=null) {
+			session.invalidate();
+		}
+		
+		return "redirect:/login";
+	}
 	
 //	@RequestMapping(value="/user",method=RequestMethod.POST)
 //	public String getuserData(@ModelAttribute("user") Users user, BindingResult bindingResult)

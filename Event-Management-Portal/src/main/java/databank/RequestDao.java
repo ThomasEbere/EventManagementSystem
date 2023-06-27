@@ -22,12 +22,17 @@ public class RequestDao {
 		return hibernateTemplate;
 	}
 	
+	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+		this.hibernateTemplate=hibernateTemplate;
+	}
+	
 	public Request getRequestById(int id) {
 		return (Request) hibernateTemplate.get(Request.class, id);
 	}
 	
-	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-		this.hibernateTemplate=hibernateTemplate;
+	public List<Request> getMyRequest(String email) {
+		String queryString="FROM Request r where r.email=?0";
+		return (List<Request>) hibernateTemplate.find(queryString,email);
 	}
 	
 	public void updateEventStatus(Request request,int id) {
