@@ -75,18 +75,24 @@ public class Routers {
 	}
 	
 	@RequestMapping("/user")
-	public String userlogin() {
+	public String userlogin(HttpSession session) {
+		if(session.getAttribute("email")!=null) {
+			String email=(String) session.getAttribute("email");
+		return "redirect:/userhomepage";
+		}
 		return "users";
 	}
 	
 	@RequestMapping(value="/userlogin", method=RequestMethod.POST)
-	public String userverification(@ModelAttribute("user") Users user, BindingResult bindingResult, Model model) {
+	public String userverification(@ModelAttribute("user") Users user, BindingResult bindingResult, Model model, HttpServletRequest request) {
 		
 		List<Users> myUser= users.getUserByEmail(user.getEmail());
 		
 		for(Users newUser:myUser) {
 			if(user.getEmail().equals(newUser.getEmail()) && user.getPassword().equals(newUser.getPassword())) {
 				
+				HttpSession session= request.getSession();
+				session.setAttribute("email", user.getEmail());
 				return "redirect:/userhomepage";	
 			}
 		}
@@ -120,22 +126,29 @@ public class Routers {
 	}
 	
 	@RequestMapping(value="/adminergistration",method=RequestMethod.POST)
-		public String admin(Users user, BindingResult bindingResult, Model model) {
-		users.addUser(user);
+		public String admin(Users user, BindingResult bindingResult, Model model, HttpSession session) {
+		if(session.getAttribute("email")!=null) {
+			users.addUser(user);
+			return "redirect:/userhomepage";
+		}
 		return "users";
 	}
 	
 	@RequestMapping(value="/getallrequest")
-	public String request(Model model) {
-		List<Request> request= requests.getallRequest();
+	public String request(Model model, HttpSession session) {
 		
-		model.addAttribute("myrequest", request);
-		return "success";
+		if(session.getAttribute("email")!=null) {
+			String email=(String) session.getAttribute("email");
+			List<Request> request= requests.getallRequest();
+			
+			model.addAttribute("myrequest", request);
+			return "success";
+		}
+		return "redirect:/user";
 	}
 	
 	@RequestMapping(value="/login")
 	public String testUpdate(@ModelAttribute("student") Student student, BindingResult bindingResult, HttpServletRequest request) {
-		
 		String userEmail=student.getEmail();
 		if(userEmail!=null)
 		{
@@ -155,7 +168,6 @@ public class Routers {
 			}
 
 		}
-		
 		return "studentlogin";
 	}
 	
@@ -180,45 +192,58 @@ public class Routers {
 	
 	
 	@RequestMapping("/submitrequest")
-	public String submitRequest() {
-		return "submitrequest";
+	public String submitRequest(HttpSession session) {
+			if(session.getAttribute("email")!=null) {
+			return "submitrequest";
+			}
+			
+			return "redirect:/login";
 	}
 	
 	@RequestMapping("/request")
-	public String submitRequest(@ModelAttribute("request") Request request, BindingResult bindingResult)
+	public String submitRequest(@ModelAttribute("request") Request request, BindingResult bindingResult, HttpSession session)
 	{
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.US);
-		
-		String startDate=request.getEventStartDate();
-		
-		String endDate=request.getEventEndDate();
-		
-		
-		LocalDateTime localDate = LocalDateTime.parse(startDate, formatter);
-		
-		LocalDateTime newlocalDate = LocalDateTime.parse(endDate, formatter);
+		if(session.getAttribute("email")!=null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.US);
+			
+			String startDate=request.getEventStartDate();
+			
+			String endDate=request.getEventEndDate();
+			
+			
+			LocalDateTime localDate = LocalDateTime.parse(startDate, formatter);
+			
+			LocalDateTime newlocalDate = LocalDateTime.parse(endDate, formatter);
 
 
-		
-		String newStartDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDate));
-		
-		String newEndDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(newlocalDate));
+			
+			String newStartDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDate));
+			
+			String newEndDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(newlocalDate));
 
+			
+			request.setEventStartDate(newStartDate);
+			request.setEventEndDate(newEndDate);
+			request.setStatus("New");
+			requests.addRequest(request);
+			return "redirect:/homepage";
+			}
+		return "redirect:/login";
 		
-		request.setEventStartDate(newStartDate);
-		request.setEventEndDate(newEndDate);
-		request.setStatus("New");
-		requests.addRequest(request);
-		return "redirect:/homepage";
 	}
 	
 	@RequestMapping(value="/request/{id}")
-	public String requestDetail(@PathVariable("id") int id, Model model) {
+	public String requestDetail(@PathVariable("id") int id, Model model, HttpSession session) {
+		
+		if(session.getAttribute("email")!=null) {
+
 		Request request = requests.getRequestById(id);
 		
 		model.addAttribute(request);
 		
 		return "requestdetailspage";
+		}
+		return "redirect:/user";
 	}
 	
 	@RequestMapping(value="/approved/{id}")
@@ -254,9 +279,39 @@ public class Routers {
 		if(session !=null) {
 			session.invalidate();
 		}
-		
 		return "redirect:/login";
 	}
+	
+	@RequestMapping("admin/logout")
+	public String adminlogout(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session !=null) {
+			session.invalidate();
+		}
+		return "redirect:/user";
+	}
+	
+	@RequestMapping("/usermanager")
+	public String usermanager(HttpSession session) {
+		if(session.getAttribute("email")!=null) {
+		return "adminusers";
+		}
+		return "redirect:/user";
+	}
+	
+	@RequestMapping("/adminusers")
+	public String alladminuser(Model model, HttpSession session) {
+		List<Users> myUser= users.getAllUsers();
+		
+		if(session.getAttribute("email")!=null) {
+
+		model.addAttribute("user", myUser);
+		
+		return "alladminusers";
+		}
+		return "users";
+	}
+	
 	
 //	@RequestMapping(value="/user",method=RequestMethod.POST)
 //	public String getuserData(@ModelAttribute("user") Users user, BindingResult bindingResult)

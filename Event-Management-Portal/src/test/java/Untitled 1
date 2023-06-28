@@ -21,3 +21,19 @@ Modify request database to have status field
 send email to client once the request is approved. 
 
 https://medium.com/javarevisited/lets-add-a-checkout-feature-in-spring-boot-for-our-ecommerce-app-72b12a7f3648
+
+
+#Next Work Items
+##Create session for all admin routes
+## Add ability to create admin users
+##Admin user should be able to update their profile
+## configure logout for admins
+## Add update/reject flag for all request
+## Ensure that all user routes has session enabled
+## Create view so that admins can send bill with the link to clients who submit requests
+## Create payment link for users to make payment 
+## Ensure that users can make payment 
+## Modify request submission view
+## Learn how to generate pdf receipt
+
+#Continue from admin users
