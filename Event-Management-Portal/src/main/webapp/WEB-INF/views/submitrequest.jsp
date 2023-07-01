@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +8,8 @@
 <title>Insert title here</title>
 <link href="${pageContext.request.contextPath}/resources/css/mynewstyle.css" rel="stylesheet">
 </head>
-<body>
+<body class="submit-request">
+    <mytags:userstag/>
 <h2 class="submit-event-tag">
         kindly submit the details of your event
     </h2>

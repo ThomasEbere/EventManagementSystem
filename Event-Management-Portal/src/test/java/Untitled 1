@@ -26,6 +26,7 @@ https://medium.com/javarevisited/lets-add-a-checkout-feature-in-spring-boot-for-
 #Next Work Items
 ##Create session for all admin routes
 ## Add ability to create admin users
+##Add nav to admin panel
 ##Admin user should be able to update their profile
 ## configure logout for admins
 ## Add update/reject flag for all request

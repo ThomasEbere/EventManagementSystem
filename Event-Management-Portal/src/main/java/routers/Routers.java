@@ -205,23 +205,13 @@ public class Routers {
 	{
 		if(session.getAttribute("email")!=null) {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.US);
-			
 			String startDate=request.getEventStartDate();
-			
 			String endDate=request.getEventEndDate();
-			
-			
 			LocalDateTime localDate = LocalDateTime.parse(startDate, formatter);
-			
 			LocalDateTime newlocalDate = LocalDateTime.parse(endDate, formatter);
-
-
-			
 			String newStartDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDate));
 			
 			String newEndDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(newlocalDate));
-
-			
 			request.setEventStartDate(newStartDate);
 			request.setEventEndDate(newEndDate);
 			request.setStatus("New");
@@ -308,6 +298,16 @@ public class Routers {
 		model.addAttribute("user", myUser);
 		
 		return "alladminusers";
+		}
+		return "users";
+	}
+	
+	@RequestMapping("/allregularusers")
+	public String allRegularUsers(Model model, HttpSession session) {
+		if(session.getAttribute("email")!=null) {
+			List<Student> student = students.getAllStudent();	
+			model.addAttribute("studentlist", student);
+			return "allstudentlist";
 		}
 		return "users";
 	}

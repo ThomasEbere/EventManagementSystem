@@ -376,5 +376,56 @@ ul#Navigation .active{
 }
 
 .adminlist{
-	text-align:center;
+	text-align:center;	
+	font-family:cursive;
+	font-size:40px;
+	margin:10%;
+	margin-bottom:0%;
+	
 }
+
+.admincontrol{
+	width:50%;
+	position:absolute;
+	top:40%;
+	left:30%;
+	height:90px;
+}
+
+.admincontrol div{
+	display:inline-block;
+	width:25%;
+	height:30px;
+	margin:5px;
+	padding:10px;
+		text-align:center;
+		margin-top:2%;
+	
+}
+
+.admincontrol div a{
+	text-decoration:none;
+}
+
+.admincontrol div:hover{
+	background-color:green;
+}
+
+.admintable{
+	margin:10px auto;
+}
+
+.userslist{
+	margin-top:5%;
+}
+
+.submit-request
+{
+	margin:0px;
+}
+
+
+
+
+
+
