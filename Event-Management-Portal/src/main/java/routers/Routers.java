@@ -14,6 +14,9 @@ import javax.transaction.Transactional;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +24,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import app.ChargeRequest;
 import app.Request;
 import app.Student;
 import app.Users;
@@ -31,8 +36,10 @@ import databank.UsersDao;
 import emailservice.Emails;
 
 
+@Configuration 
 @Transactional
 @Controller
+@PropertySource(value= {"classpath:application.properties"})
 public class Routers {
 	
 	Emails email = new Emails();
@@ -237,14 +244,18 @@ public class Routers {
 	}
 	
 	@RequestMapping(value="/approved/{id}")
-	public String approvedRequest(@PathVariable("id") int id) {
+	public String approvedRequest(Model model, @PathVariable("id") int id) {
 		
 		Request request = requests.getRequestById(id);
 		email.approvedRequest(request.getEmail());
 		request.setStatus("Approved");
 		requests.updateEventStatus(request, id);
 		
-		return "payment";
+		model.addAttribute("email", request.getEmail());
+		
+		model.addAttribute("requestid", id);
+		
+		return "payments";
 	}
 	
 	@RequestMapping(value="/viewSubmittedRequests")
@@ -310,6 +321,34 @@ public class Routers {
 			return "allstudentlist";
 		}
 		return "users";
+	}
+	
+	@RequestMapping("/payment")
+	public String makePayment()
+	{
+		return "payments";
+	}
+	
+	
+	@Value("${STRIPE_PUBLIC_KEY}")
+    private String stripePublicKey;
+	
+	@RequestMapping("/checkout/{amount}/{id}")
+	public String checkout(Model model, @RequestParam("amount") int amount, @RequestParam("id") int id) {
+        model.addAttribute("amount", amount);
+        System.out.println(amount);
+        model.addAttribute("stripePublicKey",stripePublicKey);
+        System.out.println(stripePublicKey);
+        model.addAttribute("currency",ChargeRequest.Currency.EUR);
+		return "data";
+	}
+	
+	@RequestMapping("/generatepayment")
+	public String generatePayment(Model model, @RequestParam("amount") int amount, @RequestParam("id") int id)
+	{
+		model.addAttribute("amount", amount);
+		model.addAttribute("requestid", id);
+		return "thisdata";
 	}
 	
 	

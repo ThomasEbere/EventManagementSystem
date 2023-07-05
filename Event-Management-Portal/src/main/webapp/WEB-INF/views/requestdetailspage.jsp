@@ -13,7 +13,7 @@
             <h3>Request Details</h3>
             <p>Event Name ${request.eventName }</p>
             <p>Event Description: ${request.eventDescription }</p>
-            <p>Status: ${request.status }</p>
+            <p id="status">Status: ${request.status }</p>
             <p>Hall of choice: ${request.location }</p>
         </div>
         <div class="event-location myevent">
@@ -33,9 +33,27 @@
             <p>Event End Date: ${request.eventEndDate }</p>
         </div>
         <div class="decision-button myevent">
-            <button><a href="/Event-Management-Portal/approved/${request.id }">approve</a></button>
+            <button id ="myapprove"><a href="/Event-Management-Portal/approved/${request.id }">approve</a></button>
             <button><a href="http://">Reject</a></button>
         </div>
     </div>
+    <script>
+    	
+    function change()
+    {
+    	let statuselement=document.getElementById("status");
+        let elem=document.getElementById("myapprove");
+        if(statuselement.innerText.includes("Approved"))
+        {
+        	console.log("Yes")
+            elem.innerText="Generate payment";
+            elem.setAttribute("href", "/payment");
+            return false;
+        }
+    }
+    
+    change();
+    
+    </script>
 </body>
 </html>
