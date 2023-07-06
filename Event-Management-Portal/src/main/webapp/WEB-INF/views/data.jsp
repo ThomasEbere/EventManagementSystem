@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/charge" method="post" id ="checkout-form">
+<form action="/Event-Management-Portal/charge" method="post" id ="checkout-form">
     <input type="hidden" value="${amount}" name="amount">
     <label for="">Price: ${amount/100}</label>
     <script
@@ -17,8 +17,8 @@
             data-key='${stripePublicKey}'
         data-amount='${amount}'
          data-currency='${currency}'
-            data-name='Baeldung'
-            data-description='Spring course checkout'
+            data-name='EMS'
+            data-description='Payment Checkout'
             data-image
                     ='https://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
             data-locale='auto'

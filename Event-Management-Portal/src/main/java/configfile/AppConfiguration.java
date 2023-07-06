@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackages={"routers","databank"})
+@ComponentScan(basePackages={"routers","databank", "app"})
 @PropertySource("classpath:database.properties")
 @PropertySource("classpath:database1.properties")
 

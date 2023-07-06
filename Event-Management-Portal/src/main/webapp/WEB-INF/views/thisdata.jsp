@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<a href="checkout/${amount }/${requestid }">click here to make payment</a>
+<p>Email to make payment has been sent to the client. Please click <a href="userhomepage">here</a> to return to the homepage</p>
 </body>
 </html>

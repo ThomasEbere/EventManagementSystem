@@ -33,7 +33,7 @@
             <p>Event End Date: ${request.eventEndDate }</p>
         </div>
         <div class="decision-button myevent">
-            <button id ="myapprove"><a href="/Event-Management-Portal/approved/${request.id }">approve</a></button>
+            <button id ="myapprove"><a id ="linkelem" href="/Event-Management-Portal/approved/${request.id }">approve</a></button>
             <button><a href="http://">Reject</a></button>
         </div>
     </div>
@@ -43,11 +43,11 @@
     {
     	let statuselement=document.getElementById("status");
         let elem=document.getElementById("myapprove");
+        let item=document.getElementById("linkelem");
         if(statuselement.innerText.includes("Approved"))
         {
-        	console.log("Yes")
-            elem.innerText="Generate payment";
-            elem.setAttribute("href", "/payment");
+        	console.log("Yes");
+            elem.innerHTML="<a href='/Event-Management-Portal/payment/${request.id}'>Generate payment</a>";
             return false;
         }
     }

@@ -22,27 +22,34 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.stripe.exception.AuthenticationException;
+import com.stripe.exception.StripeException;
+
 import app.ChargeRequest;
 import app.Request;
+import app.StripeService;
 import app.Student;
 import app.Users;
 import databank.RequestDao;
 import databank.StudentDao;
 import databank.UsersDao;
 import emailservice.Emails;
+import com.stripe.model.Charge;
 
 
-@Configuration 
+
+//@Configuration 
 @Transactional
 @Controller
 @PropertySource(value= {"classpath:application.properties"})
 public class Routers {
 	
-	Emails email = new Emails();
+	Emails emails = new Emails();
 	
 	Request request;
 	
@@ -54,6 +61,9 @@ public class Routers {
 	
 	@Autowired
 	RequestDao requests;
+	
+	@Autowired
+    private StripeService paymentsService;
 	
 	@RequestMapping("/")
 	public String login() {
@@ -72,7 +82,7 @@ public class Routers {
 		String useridentifier=UUID.randomUUID().toString();
 		student.setUserid(useridentifier);
 		if(students.addStudent(student) ==true) {
-			email.getEmail(student.getId(),student.getEmail(), useridentifier);
+			emails.getEmail(student.getId(),student.getEmail(), useridentifier);
 		}
 		else {
 			return "index";
@@ -247,7 +257,7 @@ public class Routers {
 	public String approvedRequest(Model model, @PathVariable("id") int id) {
 		
 		Request request = requests.getRequestById(id);
-		email.approvedRequest(request.getEmail());
+		emails.approvedRequest(request.getEmail());
 		request.setStatus("Approved");
 		requests.updateEventStatus(request, id);
 		
@@ -323,9 +333,16 @@ public class Routers {
 		return "users";
 	}
 	
-	@RequestMapping("/payment")
-	public String makePayment()
+	@RequestMapping("/payment/{id}")
+	public String makePayment(Model model,@PathVariable("id") int id)
 	{
+		Request request = requests.getRequestById(id);
+		request.setStatus("Approved");
+		requests.updateEventStatus(request, id);
+		
+		model.addAttribute("myemail", request.getEmail());
+		
+		model.addAttribute("requestid", id);
 		return "payments";
 	}
 	
@@ -334,7 +351,7 @@ public class Routers {
     private String stripePublicKey;
 	
 	@RequestMapping("/checkout/{amount}/{id}")
-	public String checkout(Model model, @RequestParam("amount") int amount, @RequestParam("id") int id) {
+	public String checkout(Model model, @PathVariable("amount") int amount, @PathVariable("id") int id) {
         model.addAttribute("amount", amount);
         System.out.println(amount);
         model.addAttribute("stripePublicKey",stripePublicKey);
@@ -344,14 +361,32 @@ public class Routers {
 	}
 	
 	@RequestMapping("/generatepayment")
-	public String generatePayment(Model model, @RequestParam("amount") int amount, @RequestParam("id") int id)
+	public String generatePayment(Model model, @RequestParam("amount") int amount, @RequestParam("id") int id, @RequestParam("email") String email)
 	{
-		model.addAttribute("amount", amount);
-		model.addAttribute("requestid", id);
+		
+		System.out.println(amount);
+		System.out.println(id);
+		System.out.println(email);
+
+//		model.addAttribute("amount", amount);
+//		model.addAttribute("requestid", id);
+		emails.makePayment(id, amount, email);
 		return "thisdata";
 	}
 	
-	
+	@PostMapping("/charge")
+    public String charge(ChargeRequest chargeRequest,Model model) throws StripeException, AuthenticationException, javax.naming.AuthenticationException {
+        chargeRequest.setDescription("Example charge");
+        chargeRequest.setCurrency(ChargeRequest.Currency.EUR);
+        System.out.println("This is the token" + chargeRequest.getStripeToken());
+
+        Charge charge = paymentsService.charge(chargeRequest);
+        model.addAttribute("id", charge.getId());
+        model.addAttribute("status", charge.getStatus());
+        model.addAttribute("chargeId", charge.getId());
+        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
+        return "result";
+    }
 //	@RequestMapping(value="/user",method=RequestMethod.POST)
 //	public String getuserData(@ModelAttribute("user") Users user, BindingResult bindingResult)
 //	{

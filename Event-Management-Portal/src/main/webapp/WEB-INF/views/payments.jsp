@@ -12,6 +12,7 @@
 <label for="amount">Amount</label>
 <input type="number" name="amount"/>
 <input type="hidden" value ="${requestid}" name="id"/>
+<input type="hidden" value ="${email}" name="email"/>
 <input type="submit" value="submit">
 </form>
 </body>
