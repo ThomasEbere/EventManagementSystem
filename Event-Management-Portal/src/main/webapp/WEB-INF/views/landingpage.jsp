@@ -10,7 +10,7 @@
 </head>
 <body class="request">
     <mytags:userstag/>
-    <h2 class="thiselement">Event Management System</h2>
+    <h2 class="thiselement">Thomas Event Event Management System</h2>
     <h3>Welcome to your homepage ${firstname }</h3>
 </body>
 </html>

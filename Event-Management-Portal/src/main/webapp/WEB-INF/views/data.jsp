@@ -5,17 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="${pageContext.request.contextPath}/resources/css/mynewstyle.css" rel="stylesheet">
 </head>
 <body>
-
-<form action="/Event-Management-Portal/charge" method="post" id ="checkout-form">
+<h3 class="payment-h3">This is the estimated cost for your Event</h3>
+<div class="payment-div">
+<h3>Please click on the "pay with Card" button to make payment</h3>
+<form action="/Event-Management-Portal/charge/${id }" method="post" id ="checkout-form">
     <input type="hidden" value="${amount}" name="amount">
-    <label for="">Price: ${amount/100}</label>
+    <label for="">Price: ${amount}</label>
     <script
             src='https://checkout.stripe.com/checkout.js'
             class='stripe-button'
             data-key='${stripePublicKey}'
-        data-amount='${amount}'
+        data-amount='${amount *100}'
          data-currency='${currency}'
             data-name='EMS'
             data-description='Payment Checkout'
@@ -25,5 +28,6 @@
             data-zip-code='false'>
     </script>
 </form>
+</div>
 </body>
 </html>

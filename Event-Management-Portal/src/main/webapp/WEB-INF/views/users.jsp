@@ -9,7 +9,7 @@
 </head>
 <body>
 <header>
-        <h1>Welcome Prime University</h1>
+        <h1>Welcome To Thomas Event Booking System</h1>
     </header>
 <div class="mydiv topdiv thelogin">
     <h2>Please supply details to login</h2>
@@ -27,7 +27,6 @@
         <div class="newdiv lastdiv">
         <input type="submit"  name="" value="submit" class="loginsub">
     </div>
-    <a href="signup" class="loginoptions">sign up</a>
 </div>
     </form>
 </div>

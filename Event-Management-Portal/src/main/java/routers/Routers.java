@@ -1,6 +1,7 @@
 package routers;
 
 import java.util.List;
+
 import java.util.Locale;
 import java.util.UUID;
 
@@ -31,15 +32,18 @@ import com.stripe.exception.AuthenticationException;
 import com.stripe.exception.StripeException;
 
 import app.ChargeRequest;
+import app.Payments;
 import app.Request;
 import app.StripeService;
 import app.Student;
 import app.Users;
+import databank.PaymentDao;
 import databank.RequestDao;
 import databank.StudentDao;
 import databank.UsersDao;
 import emailservice.Emails;
 import com.stripe.model.Charge;
+import java.util.Date;
 
 
 
@@ -53,6 +57,8 @@ public class Routers {
 	
 	Request request;
 	
+	Payments payments = new Payments();
+	
 	@Autowired
 	StudentDao students;
 	
@@ -61,6 +67,9 @@ public class Routers {
 	
 	@Autowired
 	RequestDao requests;
+	
+	@Autowired
+	PaymentDao payment;
 	
 	@Autowired
     private StripeService paymentsService;
@@ -356,7 +365,7 @@ public class Routers {
         System.out.println(amount);
         model.addAttribute("stripePublicKey",stripePublicKey);
         System.out.println(stripePublicKey);
-        model.addAttribute("currency",ChargeRequest.Currency.EUR);
+        model.addAttribute("currency",ChargeRequest.Currency.USD);
 		return "data";
 	}
 	
@@ -374,24 +383,35 @@ public class Routers {
 		return "thisdata";
 	}
 	
-	@PostMapping("/charge")
-    public String charge(ChargeRequest chargeRequest,Model model) throws StripeException, AuthenticationException, javax.naming.AuthenticationException {
+	@PostMapping("/charge/{id}")
+    public String charge(ChargeRequest chargeRequest,Model model, @PathVariable("id") int id, @RequestParam("amount") int amount) throws StripeException, AuthenticationException, javax.naming.AuthenticationException {
         chargeRequest.setDescription("Example charge");
-        chargeRequest.setCurrency(ChargeRequest.Currency.EUR);
+        chargeRequest.setCurrency(ChargeRequest.Currency.USD);
         System.out.println("This is the token" + chargeRequest.getStripeToken());
-
-        Charge charge = paymentsService.charge(chargeRequest);
-        model.addAttribute("id", charge.getId());
-        model.addAttribute("status", charge.getStatus());
-        model.addAttribute("chargeId", charge.getId());
-        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
+        
+       
+        
+		Charge charge = paymentsService.charge(chargeRequest);
+		if(charge.getStatus().contentEquals("succeeded")) {
+			Request request = requests.getRequestById(id);
+			request.setStatus("Paid");
+			requests.updateEventStatus(request, id); 
+			Date date= new Date();
+		    String paymentDate=date.toLocaleString(); 
+		    payments.setRequestId(id);
+		    payments.setPaymentId(charge.getId());	 
+		    payments.setAmount(amount);
+		    payments.setPaymentDate(paymentDate);
+		    payment.addPaymentRecord(payments);
+		    return "paid";
+		    
+		}  
+//        model.addAttribute("id", charge.getId());
+//        model.addAttribute("status", charge.getStatus());
+//        model.addAttribute("chargeId", charge.getId());
+//        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
         return "result";
     }
-//	@RequestMapping(value="/user",method=RequestMethod.POST)
-//	public String getuserData(@ModelAttribute("user") Users user, BindingResult bindingResult)
-//	{
-//		users.addUser(user);
-//		return "users";
-//	}
+
 
 }

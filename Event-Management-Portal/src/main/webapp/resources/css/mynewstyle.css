@@ -91,7 +91,7 @@ header{
     background-color: #0049B7;
     height: 50px;
     position: relative;
-    top: -22px;
+    top: -10px;
 }
 .mydiv .login
 {
@@ -424,7 +424,71 @@ ul#Navigation .active{
 	margin:0px;
 }
 
+.adminpage{
+	text-align:center;
+}
 
+
+.payment-form{
+	width:20%;
+	height:100px;
+	background-color:white;
+	position:absolute;
+	top:30%;
+	left:40%;
+}
+
+.payment-form input[type=number]{
+	width:20%;
+	display:inline-block;
+	margin-right:0%;
+	float:none;
+	margin-top:6%;
+	margin-left:25%;
+}
+
+.payment-form input[type=submit]{
+	width:15%;
+	background-color:green;
+	float:none;
+}
+
+.payment-form label{
+	margin-top:2%;
+	position:absolute;
+}
+
+.cost-page{
+	font-family:cursive;
+	text-align:center;
+	font-size:50px;
+}
+
+.email-sent{
+	margin-left:30px;
+}
+
+.payment-div{
+	width:22%;
+	height:130px;
+	 position:absolute;
+	 top:40%;
+	 left:40%;
+	 background-color:white;
+}
+
+.payment-h3{
+	font-size:50px;
+	text-align:center;
+}
+
+.payment-div button{
+	margin-top:5px;
+}
+
+.payment-div label{
+	top:2px;
+}
 
 
 

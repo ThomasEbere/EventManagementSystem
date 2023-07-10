@@ -12,6 +12,7 @@
 </head>
 <body>
 <mytags:adminnav1/>
+<h3 class="adminpage">Welcome To The Admin HomePage</h3>
 <table>
 <tr>
 <th>Event Name</th>
