@@ -130,7 +130,7 @@ public class Routers {
 	@RequestMapping(value="/userhomepage")
 	public String userHomePage(Model model) {
 		
-		List<Request> request=requests.getallRequest();
+		List<Request> request=requests.getAllNonPaidRequest();
 		model.addAttribute("request", request);
 		return "success";
 	}
@@ -361,12 +361,24 @@ public class Routers {
 	
 	@RequestMapping("/checkout/{amount}/{id}")
 	public String checkout(Model model, @PathVariable("amount") int amount, @PathVariable("id") int id) {
-        model.addAttribute("amount", amount);
-        System.out.println(amount);
-        model.addAttribute("stripePublicKey",stripePublicKey);
-        System.out.println(stripePublicKey);
-        model.addAttribute("currency",ChargeRequest.Currency.USD);
-		return "data";
+		
+		Request request= requests.getRequestById(id);
+		System.out.println(request.getStatus());
+		if (request.getStatus().contentEquals("Paid")){
+			String message ="Payment has been made";
+			System.out.println(message);
+			model.addAttribute("message", message);
+			return "data";
+		}
+		else {
+			model.addAttribute("amount", amount);
+	        System.out.println(amount);
+	        model.addAttribute("stripePublicKey",stripePublicKey);
+	        System.out.println(stripePublicKey);
+	        model.addAttribute("currency",ChargeRequest.Currency.USD);
+			return "data";
+		}
+        
 	}
 	
 	@RequestMapping("/generatepayment")
@@ -376,9 +388,9 @@ public class Routers {
 		System.out.println(amount);
 		System.out.println(id);
 		System.out.println(email);
-
-//		model.addAttribute("amount", amount);
-//		model.addAttribute("requestid", id);
+		Request request = requests.getRequestById(id);
+		request.setStatus("Sent Payment Link");
+		requests.updateEventStatus(request, id);
 		emails.makePayment(id, amount, email);
 		return "thisdata";
 	}
@@ -412,6 +424,15 @@ public class Routers {
 //        model.addAttribute("balance_transaction", charge.getBalanceTransaction());
         return "result";
     }
+	
+	@RequestMapping("/rejected/{id}")
+	public String rejectRequest(@PathVariable("id") int id) {
+		Request request = requests.getRequestById(id);
+		request.setStatus("Rejected");
+		requests.updateEventStatus(request, id); 
+		return "redirect:/userhomepage";
+	}
+	
 
 
 }

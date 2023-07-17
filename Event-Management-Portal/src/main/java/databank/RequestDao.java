@@ -44,9 +44,16 @@ public class RequestDao {
 		hibernateTemplate.save(request);
 	}
 	
+	public List<Request> getAllNonPaidRequest(){
+		String queryString="From Request r where r.status!=?0";
+		return (List<Request>) hibernateTemplate.find(queryString, "Paid");
+	}
+	
 	public List<Request> getallRequest()
 	{
 		return (List<Request>)hibernateTemplate.find("from Request");
 	}
+	
+	
 
 }

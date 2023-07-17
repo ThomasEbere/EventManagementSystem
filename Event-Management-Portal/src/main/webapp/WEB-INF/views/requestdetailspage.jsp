@@ -34,25 +34,34 @@
         </div>
         <div class="decision-button myevent">
             <button id ="myapprove"><a id ="linkelem" href="/Event-Management-Portal/approved/${request.id }">approve</a></button>
-            <button><a href="http://">Reject</a></button>
+            <button><a href="/Event-Management-Portal/rejected/${request.id }">Reject</a></button>
         </div>
     </div>
     <script>
-    	
+    
+    let statuselement=document.getElementById("status");
+    let elem=document.getElementById("myapprove");
+    let item=document.getElementById("linkelem");
     function change()
     {
-    	let statuselement=document.getElementById("status");
-        let elem=document.getElementById("myapprove");
-        let item=document.getElementById("linkelem");
+    	
         if(statuselement.innerText.includes("Approved"))
         {
-        	console.log("Yes");
             elem.innerHTML="<a href='/Event-Management-Portal/payment/${request.id}'>Generate payment</a>";
             return false;
         }
     }
     
     change();
+    
+    function reSendPaymentLink()
+    {
+    	if ( statuselement.innerText.includes("Sent Payment Link")){
+    		elem.innerHTML="<a href='/Event-Management-Portal/payment/${request.id}'>Resend Payment Link</a>"
+    	}
+    }
+    
+    reSendPaymentLink();
     
     </script>
 </body>

@@ -72,7 +72,7 @@
             <input type="email" name="email">
             </div>
         </div>
-        <div class="event">
+        <div class="event date">
             <div class="start-date">
                 <label for="EventName">Start Date and Time</label>
             <input type="datetime-local" name="eventStartDate">

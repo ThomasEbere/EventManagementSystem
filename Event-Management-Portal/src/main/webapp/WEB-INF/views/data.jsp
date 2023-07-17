@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+            <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,7 @@
 <link href="${pageContext.request.contextPath}/resources/css/mynewstyle.css" rel="stylesheet">
 </head>
 <body>
+<c:if test="${message=='Paid'}"> Yes</c:if>
 <h3 class="payment-h3">This is the estimated cost for your Event</h3>
 <div class="payment-div">
 <h3>Please click on the "pay with Card" button to make payment</h3>

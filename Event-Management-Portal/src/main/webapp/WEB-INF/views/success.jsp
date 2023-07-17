@@ -18,6 +18,7 @@
 <th>Event Name</th>
 <th>Event Description</th>
 <th>Request Date</th>
+<th>Request Status</th>
 </tr>
 
 <c:forEach var="request" items="${request }">
