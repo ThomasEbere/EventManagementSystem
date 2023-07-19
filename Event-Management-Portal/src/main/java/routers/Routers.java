@@ -365,7 +365,7 @@ public class Routers {
 		Request request= requests.getRequestById(id);
 		System.out.println(request.getStatus());
 		if (request.getStatus().contentEquals("Paid")){
-			String message ="Payment has been made";
+			String message ="Paid";
 			System.out.println(message);
 			model.addAttribute("message", message);
 			return "data";
@@ -378,13 +378,11 @@ public class Routers {
 	        model.addAttribute("currency",ChargeRequest.Currency.USD);
 			return "data";
 		}
-        
 	}
 	
 	@RequestMapping("/generatepayment")
 	public String generatePayment(Model model, @RequestParam("amount") int amount, @RequestParam("id") int id, @RequestParam("email") String email)
 	{
-		
 		System.out.println(amount);
 		System.out.println(id);
 		System.out.println(email);

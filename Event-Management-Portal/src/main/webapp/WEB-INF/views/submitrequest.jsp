@@ -13,8 +13,9 @@
 <h2 class="submit-event-tag">
         kindly submit the details of your event
     </h2>
+    <div class="inner-submit">
+        <div class="submit-event">
     <form action="request" method="post">
-    <div class="submit-event">
         <div class="event eventName">
             <label for="EventName">Enter Name of Event</label>
             <input type="text" name="eventName">
@@ -83,7 +84,9 @@
             </div>
         </div>
             <input type="submit" value="submit" class="submit">
-        </div> 
 </form>
+        </div> 
+
+</div>
 </body>
 </html>

@@ -9,7 +9,11 @@
 <link href="${pageContext.request.contextPath}/resources/css/mynewstyle.css" rel="stylesheet">
 </head>
 <body>
-<c:if test="${message=='Paid'}"> Yes</c:if>
+<c:choose>
+<c:when test="${message=='Paid' }">
+<h2 class="confirmpayment">This request has been paid for. If there are complications please contact the admin</h2>
+</c:when>
+<c:otherwise>
 <h3 class="payment-h3">This is the estimated cost for your Event</h3>
 <div class="payment-div">
 <h3>Please click on the "pay with Card" button to make payment</h3>
@@ -31,5 +35,7 @@
     </script>
 </form>
 </div>
+</c:otherwise>
+</c:choose>
 </body>
 </html>
