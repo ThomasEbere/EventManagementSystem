@@ -431,6 +431,36 @@ public class Routers {
 		return "redirect:/userhomepage";
 	}
 	
+	@RequestMapping("/edit/{id}")
+	public String editRequest(@PathVariable("id") int id, Model model) {
+		
+		Request request = requests.getRequestById(id);
+		model.addAttribute("request", request);
+		return "editRequest";
+	}
+	
+	@RequestMapping("/updateRequest/{id}")
+	public String makeChanges(@ModelAttribute("request") Request request, BindingResult bindingResult,  HttpSession session, @PathVariable("id") int id)
+	{
+		if(session.getAttribute("email")!=null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.US);
+			String startDate=request.getEventStartDate();
+			
+			String endDate=request.getEventEndDate();
+			LocalDateTime localDate = LocalDateTime.parse(startDate, formatter);
+			LocalDateTime newlocalDate = LocalDateTime.parse(endDate, formatter);
+			String newStartDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(localDate));
+			
+			String newEndDate = (DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(newlocalDate));
+			request.setEventStartDate(newStartDate);
+			request.setEventEndDate(newEndDate);
+			System.out.println(request.getStatus());
+			requests.updateEventStatus(request, id);
+			return "redirect:/userhomepage";
+			}
+		return "render:/user";
+	}
+	
 
 
 }

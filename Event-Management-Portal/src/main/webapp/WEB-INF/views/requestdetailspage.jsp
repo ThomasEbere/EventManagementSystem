@@ -35,6 +35,8 @@
         <div class="decision-button myevent">
             <button id ="myapprove"><a id ="linkelem" href="/Event-Management-Portal/approved/${request.id }">approve</a></button>
             <button><a href="/Event-Management-Portal/rejected/${request.id }">Reject</a></button>
+            <button><a href="/Event-Management-Portal/edit/${request.id }">Edit</a></button>
+            
         </div>
     </div>
     <script>
